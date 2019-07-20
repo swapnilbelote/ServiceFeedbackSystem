@@ -15,6 +15,10 @@ public:
     explicit CServiceFeedback(QWidget *parent = nullptr);
     ~CServiceFeedback();
 
+private slots:
+    void onResetClick();
+    void onSubmitClick();
+
 private:
     Ui::CServiceFeedback *ui;
 };

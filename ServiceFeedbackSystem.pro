@@ -27,9 +27,11 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         View/ServiceFeedback.cpp \
+        Log/Log.cpp
 
 HEADERS += \
-        View/ServiceFeedback.h
+        View/ServiceFeedback.h \
+        Log/Log.h
 
 FORMS += \
         UI/servicefeedback.ui
