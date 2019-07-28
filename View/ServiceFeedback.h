@@ -20,6 +20,10 @@ private slots:
     void onSubmitClick();
 
 private:
+    unsigned int GetRating() const;
+    bool IsMandetoryDetailsEntered() const;
+
+private:
     Ui::CServiceFeedback *ui;
 };
 
