@@ -1,10 +1,11 @@
 #include "ServiceFeedback.h"
 #include "ui_servicefeedback.h"
 #include "Log/Log.h"
+#include "ThankYou.h"
 
-CServiceFeedback::CServiceFeedback(QWidget *parent) :
-                                                      QMainWindow(parent),
-                                                      ui(new Ui::CServiceFeedback)
+CServiceFeedback::CServiceFeedback(QWidget *parent) :QMainWindow(parent),
+                                                     ui(new Ui::CServiceFeedback),
+                                                     thankYouUi(new CThankYou(this))
 {
     LogInfo(Q_FUNC_INFO);
 
@@ -12,6 +13,7 @@ CServiceFeedback::CServiceFeedback(QWidget *parent) :
 
     connect(ui->pushButton_2, &QPushButton::clicked, this,  &CServiceFeedback::onResetClick);
     connect(ui->pushButton, &QPushButton::clicked, this,  &CServiceFeedback::onSubmitClick);
+    connect(thankYouUi, &CThankYou::closeButtonClicked, this, &CServiceFeedback::onThankYouUiCloseClick);
 }
 
 CServiceFeedback::~CServiceFeedback()
@@ -19,10 +21,13 @@ CServiceFeedback::~CServiceFeedback()
     LogInfo(Q_FUNC_INFO);
 
     delete ui;
+    delete thankYouUi;
 }
 
 unsigned int CServiceFeedback::GetRating() const
 {
+    LogInfo(Q_FUNC_INFO);
+
     if (ui->radioButton->isChecked())
     {
         return 1;
@@ -49,6 +54,8 @@ unsigned int CServiceFeedback::GetRating() const
 
 bool CServiceFeedback::IsMandetoryDetailsEntered() const
 {
+    LogInfo(Q_FUNC_INFO);
+
     QString name = ui->lineEdit->text();
     QString address = ui->lineEdit_2->text();
     unsigned int rating = GetRating();
@@ -105,5 +112,16 @@ void CServiceFeedback::onSubmitClick()
                address.toUtf8().constData(),
                GetRating(),
                feedback.toUtf8().constData());
+
+        thankYouUi->Show();
+        this->hide();
     }
+}
+
+void CServiceFeedback::onThankYouUiCloseClick()
+{
+    LogInfo(Q_FUNC_INFO);
+
+    thankYouUi->close();
+    this->close();
 }

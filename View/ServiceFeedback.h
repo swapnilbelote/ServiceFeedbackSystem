@@ -7,6 +7,8 @@ namespace Ui {
 class CServiceFeedback;
 }
 
+class CThankYou;
+
 class CServiceFeedback : public QMainWindow
 {
     Q_OBJECT
@@ -18,6 +20,7 @@ public:
 private slots:
     void onResetClick();
     void onSubmitClick();
+    void onThankYouUiCloseClick();
 
 private:
     unsigned int GetRating() const;
@@ -25,6 +28,7 @@ private:
 
 private:
     Ui::CServiceFeedback *ui;
+    CThankYou* thankYouUi;
 };
 
 #endif // SERVICEFEEDBACK_H
