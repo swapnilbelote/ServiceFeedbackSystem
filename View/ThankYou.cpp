@@ -13,6 +13,7 @@ CThankYou::CThankYou(QWidget* parent) : QMainWindow (parent),
 
     mo.setFileName(":/Resources/ThankYou.gif");
     mo.setScaledSize(QSize(431, 321));
+
     ui->label->setMovie(&mo);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &CThankYou::closeButtonClicked);
@@ -25,10 +26,12 @@ CThankYou::~CThankYou()
     delete ui;
 }
 
-void CThankYou::Show()
+void CThankYou::Show(const QRect &rect)
 {
     LogInfo(Q_FUNC_INFO);
 
     mo.start();
+
+    this->setGeometry(rect);
     this->show();
 }

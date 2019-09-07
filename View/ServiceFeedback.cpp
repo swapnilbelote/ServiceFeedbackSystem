@@ -11,8 +11,8 @@ CServiceFeedback::CServiceFeedback(QWidget *parent) :QMainWindow(parent),
 
     ui->setupUi(this);
 
-    connect(ui->pushButton_2, &QPushButton::clicked, this,  &CServiceFeedback::onResetClick);
-    connect(ui->pushButton, &QPushButton::clicked, this,  &CServiceFeedback::onSubmitClick);
+    connect(ui->resetPushButton, &QPushButton::clicked, this,  &CServiceFeedback::onResetClick);
+    connect(ui->submitPushButton, &QPushButton::clicked, this,  &CServiceFeedback::onSubmitClick);
     connect(thankYouUi, &CThankYou::closeButtonClicked, this, &CServiceFeedback::onThankYouUiCloseClick);
 }
 
@@ -28,23 +28,23 @@ unsigned int CServiceFeedback::GetRating() const
 {
     LogInfo(Q_FUNC_INFO);
 
-    if (ui->radioButton->isChecked())
+    if (ui->rating_1->isChecked())
     {
         return 1;
     }
-    else if (ui->radioButton_2->isChecked())
+    else if (ui->rating_2->isChecked())
     {
         return 2;
     }
-    else if (ui->radioButton_3->isChecked())
+    else if (ui->rating_3->isChecked())
     {
         return 3;
     }
-    else if (ui->radioButton_4->isChecked())
+    else if (ui->rating_4->isChecked())
     {
         return 4;
     }
-    else if (ui->radioButton_5->isChecked())
+    else if (ui->rating_5->isChecked())
     {
         return 5;
     }
@@ -56,8 +56,8 @@ bool CServiceFeedback::IsMandetoryDetailsEntered() const
 {
     LogInfo(Q_FUNC_INFO);
 
-    QString name = ui->lineEdit->text();
-    QString address = ui->lineEdit_2->text();
+    QString name = ui->nameLineEdit->text();
+    QString address = ui->addressLineEdit->text();
     unsigned int rating = GetRating();
 
     if (name.isEmpty() || address.isEmpty() || rating == 0)
@@ -75,7 +75,7 @@ bool CServiceFeedback::IsMandetoryDetailsEntered() const
             else errorMsg.append(QString ("rating"));
         }
 
-        QLabel* errorMessageLabel = ui->label_5;
+        QLabel* errorMessageLabel = ui->errorLabel;
         errorMessageLabel->setStyleSheet("QLabel { color : red; }");
         errorMessageLabel->setText(errorMsg);
 
@@ -89,35 +89,35 @@ void CServiceFeedback::onResetClick()
 {
     LogInfo(Q_FUNC_INFO);
 
-    ui->plainTextEdit->clear();
-    ui->lineEdit->clear();
-    ui->lineEdit_2->clear();
-    ui->label_5->clear();
+    ui->feedbackPlainTextEdit->clear();
+    ui->nameLineEdit->clear();
+    ui->addressLineEdit->clear();
+    ui->errorLabel->clear();
 
-    ui->radioButton->setAutoExclusive(false);
-    ui->radioButton_2->setAutoExclusive(false);
-    ui->radioButton_3->setAutoExclusive(false);
-    ui->radioButton_4->setAutoExclusive(false);
-    ui->radioButton_5->setAutoExclusive(false);
+    ui->rating_1->setAutoExclusive(false);
+    ui->rating_2->setAutoExclusive(false);
+    ui->rating_3->setAutoExclusive(false);
+    ui->rating_4->setAutoExclusive(false);
+    ui->rating_5->setAutoExclusive(false);
 
-    ui->radioButton->setChecked(false);
-    ui->radioButton_2->setChecked(false);
-    ui->radioButton_3->setChecked(false);
-    ui->radioButton_4->setChecked(false);
-    ui->radioButton_5->setChecked(false);
+    ui->rating_1->setChecked(false);
+    ui->rating_2->setChecked(false);
+    ui->rating_3->setChecked(false);
+    ui->rating_4->setChecked(false);
+    ui->rating_5->setChecked(false);
 }
 
 void CServiceFeedback::onSubmitClick()
 {
     LogInfo(Q_FUNC_INFO);
     
-    ui->label_5->clear();
+    ui->errorLabel->clear();
 
     if (IsMandetoryDetailsEntered())
     {
-        QString name = ui->lineEdit->text();
-        QString address = ui->lineEdit_2->text();
-        QString feedback = ui->plainTextEdit->toPlainText();
+        QString name = ui->nameLineEdit->text();
+        QString address = ui->addressLineEdit->text();
+        QString feedback = ui->feedbackPlainTextEdit->toPlainText();
 
         qDebug("Name : %s, Address : %s, Rating : %d, Feedback : %s",
                name.toUtf8().constData(),
@@ -125,7 +125,7 @@ void CServiceFeedback::onSubmitClick()
                GetRating(),
                feedback.toUtf8().constData());
 
-        thankYouUi->Show();
+        thankYouUi->Show(this->geometry());
         this->hide();
     }
 }

@@ -16,7 +16,7 @@ public:
     explicit CThankYou(QWidget* parent);
     ~CThankYou();
 
-    void Show();
+    void Show(const QRect &rect);
 
 signals:
     void closeButtonClicked();
