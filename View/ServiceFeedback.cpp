@@ -93,6 +93,18 @@ void CServiceFeedback::onResetClick()
     ui->lineEdit->clear();
     ui->lineEdit_2->clear();
     ui->label_5->clear();
+
+    ui->radioButton->setAutoExclusive(false);
+    ui->radioButton_2->setAutoExclusive(false);
+    ui->radioButton_3->setAutoExclusive(false);
+    ui->radioButton_4->setAutoExclusive(false);
+    ui->radioButton_5->setAutoExclusive(false);
+
+    ui->radioButton->setChecked(false);
+    ui->radioButton_2->setChecked(false);
+    ui->radioButton_3->setChecked(false);
+    ui->radioButton_4->setChecked(false);
+    ui->radioButton_5->setChecked(false);
 }
 
 void CServiceFeedback::onSubmitClick()
