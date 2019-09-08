@@ -2,20 +2,25 @@
 #include "ui_servicefeedback.h"
 #include "Log/Log.h"
 #include "ThankYou.h"
+#include "AllReviewView.h"
 #include "Utility/StorageFileOperation.h"
 
 CServiceFeedback::CServiceFeedback(QFile& fileStorage, QWidget *parent) : QMainWindow(parent),
                                                                           ui(new Ui::CServiceFeedback),
                                                                           thankYouUi(new CThankYou(this)),
+                                                                          allReviewView(new CAllReviewView(this)),
                                                                           iFileStorage(fileStorage)
 {
     LogInfo(Q_FUNC_INFO);
 
     ui->setupUi(this);
 
-    connect(ui->resetPushButton, &QPushButton::clicked, this,  &CServiceFeedback::onResetClick);
-    connect(ui->submitPushButton, &QPushButton::clicked, this,  &CServiceFeedback::onSubmitClick);
-    connect(thankYouUi, &CThankYou::closeButtonClicked, this, &CServiceFeedback::onThankYouUiCloseClick);
+    connect(ui->resetPushButton, &QPushButton::clicked, this,  &CServiceFeedback::OnResetClicked);
+    connect(ui->submitPushButton, &QPushButton::clicked, this,  &CServiceFeedback::OnSubmitClicked);
+    connect(ui->actionView, &QAction::triggered, this, &CServiceFeedback::OnAllReviewViewClicked);
+
+    connect(thankYouUi, &CThankYou::closeButtonClicked, this, &CServiceFeedback::OnThankYouUiCloseClicked);
+    connect(allReviewView, &CAllReviewView::CloseButtonClicked, this, &CServiceFeedback::OnAllReviewViewCloseClicked);
 }
 
 CServiceFeedback::~CServiceFeedback()
@@ -87,7 +92,7 @@ bool CServiceFeedback::IsMandetoryDetailsEntered() const
     return true;
 }
 
-void CServiceFeedback::onResetClick()
+void CServiceFeedback::OnResetClicked()
 {
     LogInfo(Q_FUNC_INFO);
 
@@ -109,7 +114,7 @@ void CServiceFeedback::onResetClick()
     ui->rating_5->setChecked(false);
 }
 
-void CServiceFeedback::onSubmitClick()
+void CServiceFeedback::OnSubmitClicked()
 {
     LogInfo(Q_FUNC_INFO);
     
@@ -135,10 +140,27 @@ void CServiceFeedback::onSubmitClick()
     }
 }
 
-void CServiceFeedback::onThankYouUiCloseClick()
+void CServiceFeedback::OnThankYouUiCloseClicked(const QRect& rect)
 {
     LogInfo(Q_FUNC_INFO);
 
-    thankYouUi->close();
-    this->close();
+    this->setGeometry(rect);
+    this->show();
+    this->OnResetClicked();
+}
+
+void CServiceFeedback::OnAllReviewViewClicked()
+{
+    LogInfo(Q_FUNC_INFO);
+
+    allReviewView->Show(this->geometry());
+    this->hide();
+}
+
+void CServiceFeedback::OnAllReviewViewCloseClicked(const QRect& rect)
+{
+    LogInfo(Q_FUNC_INFO);
+
+    this->setGeometry(rect);
+    this->show();
 }

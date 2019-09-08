@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>501</width>
     <height>420</height>
    </rect>
   </property>
@@ -295,20 +295,23 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>501</width>
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAll_Reviews">
+    <property name="title">
+     <string>All Reviews</string>
+    </property>
+    <addaction name="actionView"/>
+   </widget>
+   <addaction name="menuAll_Reviews"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionView">
+   <property name="text">
+    <string>View</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

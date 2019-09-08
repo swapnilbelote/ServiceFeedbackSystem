@@ -9,6 +9,7 @@ class CServiceFeedback;
 }
 
 class CThankYou;
+class CAllReviewView;
 
 class CServiceFeedback : public QMainWindow
 {
@@ -19,9 +20,11 @@ public:
     ~CServiceFeedback();
 
 private slots:
-    void onResetClick();
-    void onSubmitClick();
-    void onThankYouUiCloseClick();
+    void OnResetClicked();
+    void OnSubmitClicked();
+    void OnThankYouUiCloseClicked(const QRect& rect);
+    void OnAllReviewViewClicked();
+    void OnAllReviewViewCloseClicked(const QRect& rect);
 
 private:
     unsigned int GetRating() const;
@@ -30,6 +33,7 @@ private:
 private:
     Ui::CServiceFeedback *ui;
     CThankYou* thankYouUi;
+    CAllReviewView* allReviewView;
     QFile& iFileStorage;
 };
 

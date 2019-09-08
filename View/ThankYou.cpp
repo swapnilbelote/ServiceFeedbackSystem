@@ -16,7 +16,7 @@ CThankYou::CThankYou(QWidget* parent) : QMainWindow (parent),
 
     ui->label->setMovie(&mo);
 
-    connect(ui->pushButton, &QPushButton::clicked, this, &CThankYou::closeButtonClicked);
+    connect(ui->pushButton, &QPushButton::clicked, this, &CThankYou::OnCloseButtonClicked);
 }
 
 CThankYou::~CThankYou()
@@ -34,4 +34,13 @@ void CThankYou::Show(const QRect &rect)
 
     this->setGeometry(rect);
     this->show();
+}
+
+void CThankYou::OnCloseButtonClicked()
+{
+    LogInfo(Q_FUNC_INFO);
+
+    this->close();
+
+    emit closeButtonClicked(this->geometry());
 }

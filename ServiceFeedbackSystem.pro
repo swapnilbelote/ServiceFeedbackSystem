@@ -26,6 +26,7 @@ CONFIG += c++17
 
 SOURCES += \
         Utility/StorageFileOperation.cpp \
+        View/AllReviewView.cpp \
         main.cpp \
         View/ServiceFeedback.cpp \
         Log/Log.cpp \
@@ -34,11 +35,13 @@ SOURCES += \
 HEADERS += \
         Utility/DataType/FileDatatype.h \
         Utility/StorageFileOperation.h \
+        View/AllReviewView.h \
         View/ServiceFeedback.h \
         Log/Log.h \
         View/ThankYou.h
 
 FORMS += \
+        UI/reviewview.ui \
         UI/servicefeedback.ui \
         UI/thankyou.ui
 
@@ -49,3 +52,5 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

@@ -16,10 +16,13 @@ public:
     explicit CThankYou(QWidget* parent);
     ~CThankYou();
 
-    void Show(const QRect &rect);
+    void Show(const QRect& rect);
 
 signals:
-    void closeButtonClicked();
+    void closeButtonClicked(const QRect& rect);
+
+public slots:
+    void OnCloseButtonClicked();
 
 private:
     Ui::CThankYou* ui;
