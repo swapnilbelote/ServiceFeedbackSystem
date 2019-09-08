@@ -1,6 +1,7 @@
 #ifndef SERVICEFEEDBACK_H
 #define SERVICEFEEDBACK_H
 
+#include <QFile>
 #include <QMainWindow>
 
 namespace Ui {
@@ -14,7 +15,7 @@ class CServiceFeedback : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit CServiceFeedback(QWidget *parent = nullptr);
+    explicit CServiceFeedback(QFile& fileStorage, QWidget *parent = nullptr);
     ~CServiceFeedback();
 
 private slots:
@@ -29,6 +30,7 @@ private:
 private:
     Ui::CServiceFeedback *ui;
     CThankYou* thankYouUi;
+    QFile& iFileStorage;
 };
 
 #endif // SERVICEFEEDBACK_H

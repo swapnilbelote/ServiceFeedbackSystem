@@ -2,10 +2,12 @@
 #include "ui_servicefeedback.h"
 #include "Log/Log.h"
 #include "ThankYou.h"
+#include "Utility/StorageFileOperation.h"
 
-CServiceFeedback::CServiceFeedback(QWidget *parent) :QMainWindow(parent),
-                                                     ui(new Ui::CServiceFeedback),
-                                                     thankYouUi(new CThankYou(this))
+CServiceFeedback::CServiceFeedback(QFile& fileStorage, QWidget *parent) : QMainWindow(parent),
+                                                                          ui(new Ui::CServiceFeedback),
+                                                                          thankYouUi(new CThankYou(this)),
+                                                                          iFileStorage(fileStorage)
 {
     LogInfo(Q_FUNC_INFO);
 
@@ -115,15 +117,18 @@ void CServiceFeedback::onSubmitClick()
 
     if (IsMandetoryDetailsEntered())
     {
-        QString name = ui->nameLineEdit->text();
-        QString address = ui->addressLineEdit->text();
-        QString feedback = ui->feedbackPlainTextEdit->toPlainText();
+        FileDatatype::FileData data(ui->nameLineEdit->text().toUtf8().constData(),
+                                    ui->addressLineEdit->text().toUtf8().constData(),
+                                    GetRating(),
+                                    ui->feedbackPlainTextEdit->toPlainText().toUtf8().constData());
 
         qDebug("Name : %s, Address : %s, Rating : %d, Feedback : %s",
-               name.toUtf8().constData(),
-               address.toUtf8().constData(),
-               GetRating(),
-               feedback.toUtf8().constData());
+               data.name.c_str(),
+               data.address.c_str(),
+               data.rating,
+               data.feedback->c_str());
+
+        StorageFileOperation::WriteDataToFile(iFileStorage, data);
 
         thankYouUi->Show(this->geometry());
         this->hide();
