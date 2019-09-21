@@ -14,17 +14,12 @@
    <string>reviewView</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>381</width>
-     <height>281</height>
-    </rect>
-   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QTableWidget" name="tableWidget"/>
+      </item>
       <item>
        <spacer name="verticalSpacer">
         <property name="orientation">

@@ -8,7 +8,7 @@
 CServiceFeedback::CServiceFeedback(QFile& fileStorage, QWidget *parent) : QMainWindow(parent),
                                                                           ui(new Ui::CServiceFeedback),
                                                                           thankYouUi(new CThankYou(this)),
-                                                                          allReviewView(new CAllReviewView(this)),
+                                                                          allReviewView(new CAllReviewView(this, fileStorage)),
                                                                           iFileStorage(fileStorage)
 {
     LogInfo(Q_FUNC_INFO);
@@ -122,16 +122,16 @@ void CServiceFeedback::OnSubmitClicked()
 
     if (IsMandetoryDetailsEntered())
     {
-        FileDatatype::FileData data(ui->nameLineEdit->text().toUtf8().constData(),
-                                    ui->addressLineEdit->text().toUtf8().constData(),
+        FileDatatype::FileData data(ui->nameLineEdit->text(),
+                                    ui->addressLineEdit->text(),
                                     GetRating(),
-                                    ui->feedbackPlainTextEdit->toPlainText().toUtf8().constData());
+                                    ui->feedbackPlainTextEdit->toPlainText());
 
         qDebug("Name : %s, Address : %s, Rating : %d, Feedback : %s",
-               data.name.c_str(),
-               data.address.c_str(),
+               data.name.toUtf8().constData(),
+               data.address.toUtf8().constData(),
                data.rating,
-               data.feedback->c_str());
+               data.feedback->toUtf8().constData());
 
         StorageFileOperation::WriteDataToFile(iFileStorage, data);
 

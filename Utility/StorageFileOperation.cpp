@@ -15,10 +15,10 @@ FileDatatype::FileData FillFileData(std::string line)
 {
     FileDatatype::FileData data;
 
-    data.name = line.substr(KNameStr.size(), line.find(KAddressStr) - KNameStr.size() - 1);
-    data.address = line.substr(line.find(KAddressStr) + KAddressStr.size(), line.find(KRatingStr) - line.find(KAddressStr) - KAddressStr.size() - 1);
+    data.name = QString::fromStdString(line.substr(KNameStr.size(), line.find(KAddressStr) - KNameStr.size() - 1));
+    data.address = QString::fromStdString(line.substr(line.find(KAddressStr) + KAddressStr.size(), line.find(KRatingStr) - line.find(KAddressStr) - KAddressStr.size() - 1));
     data.rating = std::stoi(line.substr(line.find(KRatingStr) + KRatingStr.size(), line.find(KFeedbackStr) - line.find(KRatingStr) - KRatingStr.size() - 1));
-    data.feedback = line.substr(line.find(KFeedbackStr) + KFeedbackStr.size());
+    data.feedback = QString::fromStdString(line.substr(line.find(KFeedbackStr) + KFeedbackStr.size()));
 
     return data;
 }
@@ -33,10 +33,10 @@ void WriteDataToFile(QFile& file, FileDatatype::FileData& fileData)
     if (file.open(QFile::OpenModeFlag::Append))
     {
         QTextStream stream(&file);
-        stream << "Name: " << fileData.name.c_str()
-               << " Address: " << fileData.address.c_str()
+        stream << "Name: " << fileData.name.toUtf8().constData()
+               << " Address: " << fileData.address.toUtf8().constData()
                << " Rating: " << fileData.rating
-               << " Feedback: " << fileData.feedback->c_str()
+               << " Feedback: " << fileData.feedback->toUtf8().constData()
                << "\n";
 
         file.close();
